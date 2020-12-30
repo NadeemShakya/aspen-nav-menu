@@ -58,7 +58,10 @@ export const AspenNavMenuMixin = superclass =>
       if (page.startsWith('http')) {
         window.open(page);
       } else if (page != 'login') {
-        window.location = `/${e.detail.value}`;
+        const url = `/${e.detail.value}`;
+
+        window.history.pushState({}, null, url);
+        window.dispatchEvent(new CustomEvent("location-changed"));
       } else {
         if (this.isLoggedIn) {
           this.dispatchEvent(
